@@ -89,6 +89,12 @@ def junos_base_cfg_object():
 
 
 @pytest.fixture(scope="function")
+def huawei_vrp_base_cfg_object():
+    cfg_conn = ScrapliCfgJunosBase()
+    return cfg_conn
+
+
+@pytest.fixture(scope="function")
 def dummy_logger():
     class Logger:
         def info(self, msg):

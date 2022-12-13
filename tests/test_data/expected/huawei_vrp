@@ -1,0 +1,380 @@
+[V300R019C11SPC200]
+#
+ sysname huawei_vrp_test_config
+#
+ drop illegal-mac alarm
+#
+ set cpu-usage threshold 95 restore 90
+#
+ clock timezone CET add 01:00:00
+ clock daylight-saving-time CEST repeating 2:0 last Sunday March 3:0 last Sunday October 01:00 2017 2037
+#
+super password level 3 cipher %^%#3x/o0P^>F,U"*>8!BYz#]6cQBcIBx((oj>-8feWU]J@6LfSvS"!:c-6,Y.eE%^%#
+super password level 15 cipher %^%#w>h4=ln-j(w{h3Vd34J%{HC.G#8,S0|;gfD"0jfY"R~*!9Zu#CsX{Z'3PYcF%^%#
+#
+vlan batch 10
+#
+stp mode stp
+stp instance 0 priority 61440
+#
+qos overhead layer link
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name multi_authen_profile
+authentication-profile name portal_authen_profile
+#
+set flow-stat interval 30
+#
+dns domain mrs
+#
+ icmp rate-limit enable
+#
+radius-server template default
+#
+hwtacacs-server template ip-vpn
+ hwtacacs-server authentication 192.168.28.191
+ hwtacacs-server authorization 192.168.28.191
+ hwtacacs-server accounting 192.168.28.191
+ hwtacacs-server source-ip source-loopback 0
+ hwtacacs-server shared-key cipher %^%#Ui!cOtI""Z5.aMCMhAX(D%HXWfNLz<VV>m)~nu^S%^%#
+ undo hwtacacs-server user-name domain-included
+#
+pki realm default
+#
+acl number 2014
+ description Incoming user access
+ rule 5 permit source 192.168.28.0 0.0.0.255
+ rule 10 deny
+acl number 2015
+ description Outgoing user access
+ rule 5 deny
+acl number 2093
+ rule 5 permit source 192.168.28.0 0.0.0.255
+ rule 10 permit source 145.13.71.128 0.0.0.127
+ rule 15 permit source 145.13.76.0 0.0.0.255
+ rule 100 deny
+#
+acl number 3160
+ rule 5 deny ip destination 10.0.0.0 0.7.255.255
+ rule 10 deny ip source 10.0.0.0 0.7.255.255
+ rule 15 deny ip destination 192.168.28.0 0.0.0.255
+ rule 20 deny ip source 192.168.28.0 0.0.0.255
+ rule 25 deny ip destination 145.13.71.128 0.0.0.127
+ rule 30 deny ip source 145.13.71.128 0.0.0.127
+ rule 35 deny ip destination 145.13.76.0 0.0.0.255
+ rule 40 deny ip source 145.13.76.0 0.0.0.255
+ rule 45 permit ip
+acl number 3166
+ rule 5 permit ip source 10.1.1.131 0 destination 192.168.28.0 0.0.0.255
+ rule 10 permit ip source 10.1.1.131 0 destination 145.13.71.128 0.0.0.127
+ rule 15 permit ip source 10.1.1.131 0 destination 145.13.76.0 0.0.0.255
+acl number 3171
+ rule 5 deny ip destination 192.172.69.0 0.0.0.255
+ rule 10 deny ip source 192.172.69.0 0.0.0.255
+ rule 15 deny ip destination 145.13.71.0 0.0.0.255
+ rule 20 deny ip source 145.13.71.0 0.0.0.255
+ rule 25 deny ip destination 145.13.76.0 0.0.0.255
+ rule 30 deny ip source 193.172.69.0 0.0.0.127
+ rule 35 deny ip destination 193.172.69.0 0.0.0.127
+ rule 40 deny ip source 145.13.76.0 0.0.0.255
+ rule 45 deny ip destination 10.120.0.0 0.7.255.255
+ rule 50 deny ip source 10.120.0.0 0.7.255.255
+ rule 55 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 7701 7705
+ rule 60 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 7801 7805
+ rule 65 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 8000 8010
+ rule 70 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 8050 8060
+ rule 75 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 9000 9010
+ rule 80 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 30110 30113
+ rule 85 permit tcp source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255 destination-port range 30120 30123
+ rule 90 deny ip source 172.30.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255
+ rule 95 permit ip source 172.30.0.0 0.0.255.255 destination 10.0.0.0 0.0.0.255
+ rule 100 permit ip source 10.0.0.0 0.0.0.255 destination 172.30.0.0 0.0.255.255
+ rule 105 permit ip source 172.16.0.0 0.15.255.255 destination 172.30.0.0 0.0.255.255
+ rule 115 permit ip source 172.30.0.0 0.0.255.255 destination 172.16.0.0 0.15.255.255
+ rule 120 permit ip source 192.168.0.0 0.0.255.255 destination 172.30.0.0 0.0.255.255
+ rule 125 permit ip source 172.30.0.0 0.0.255.255 destination 192.168.0.0 0.0.255.255
+ rule 130 deny ip
+#
+ike proposal default
+ encryption-algorithm aes-256 aes-192 aes-128
+ dh group14
+ authentication-algorithm sha2-512 sha2-384 sha2-256
+ authentication-method pre-share
+ integrity-algorithm hmac-sha2-256
+ prf hmac-sha2-256
+#
+drop-profile dscp-based
+ wred dscp
+  dscp default low-limit 50 high-limit 100 discard-percentage 10
+  dscp cs1 low-limit 55 high-limit 100 discard-percentage 10
+  dscp af11 low-limit 80 high-limit 100 discard-percentage 10
+  dscp af12 low-limit 70 high-limit 100 discard-percentage 10
+  dscp af13 low-limit 60 high-limit 100 discard-percentage 10
+  dscp cs2 low-limit 60 high-limit 100 discard-percentage 10
+  dscp af21 low-limit 80 high-limit 100 discard-percentage 10
+  dscp af22 low-limit 70 high-limit 100 discard-percentage 10
+  dscp af23 low-limit 60 high-limit 100 discard-percentage 10
+  dscp cs3 low-limit 65 high-limit 100 discard-percentage 10
+  dscp af31 low-limit 80 high-limit 100 discard-percentage 10
+  dscp af32 low-limit 70 high-limit 100 discard-percentage 10
+  dscp af33 low-limit 60 high-limit 100 discard-percentage 10
+  dscp cs4 low-limit 70 high-limit 100 discard-percentage 10
+  dscp af41 low-limit 80 high-limit 100 discard-percentage 10
+  dscp af42 low-limit 70 high-limit 100 discard-percentage 10
+  dscp af43 low-limit 60 high-limit 100 discard-percentage 10
+  dscp cs5 low-limit 75 high-limit 100 discard-percentage 10
+  dscp ef low-limit 90 high-limit 100 discard-percentage 10
+  dscp cs6 low-limit 80 high-limit 100 discard-percentage 10
+  dscp cs7 low-limit 85 high-limit 100 discard-percentage 10
+#
+traffic classifier class-bronze operator or
+ if-match dscp af11 af12 af13
+ if-match ip-precedence 1
+traffic classifier class-silver operator or
+ if-match dscp af22 af23
+ if-match ip-precedence 2
+traffic classifier class-gold operator or
+ if-match dscp af31 af32 af33 af41 af42 af43
+ if-match ip-precedence 3 4
+traffic classifier management-traffic operator or
+ if-match acl 3166
+#
+traffic behavior class-bronze
+ queue af bandwidth remaining pct 10
+ drop-profile dscp-based
+ statistic enable
+traffic behavior class-silver
+ queue af bandwidth remaining pct 20
+ drop-profile dscp-based
+ statistic enable
+traffic behavior class-default-cbwfq-1
+ queue af bandwidth remaining pct 29
+ drop-profile dscp-based
+ statistic enable
+ remark dscp default
+traffic behavior class-gold
+ queue af bandwidth remaining pct 40
+ drop-profile dscp-based
+ statistic enable
+traffic behavior management-traffic
+ remark dscp af21
+ queue af bandwidth remaining pct 1
+ drop-profile dscp-based
+ statistic enable
+traffic behavior Mvlan-qos-default
+ statistic enable
+ gts cir 96000 cbs 2400000 queue-length 64
+ queue af bandwidth 100
+ traffic-policy policy-cbwfq-1
+#
+traffic policy policy-cbwfq-1
+ classifier class-gold behavior class-gold precedence 5
+ classifier class-silver behavior class-silver precedence 10
+ classifier class-bronze behavior class-bronze precedence 15
+ classifier management-traffic behavior management-traffic precedence 20
+ classifier default-class behavior class-default-cbwfq-1 precedence 65535
+traffic policy Mvlan-qos
+ classifier default-class behavior Mvlan-qos-default precedence 65535
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+aaa
+ authentication-scheme default
+  authentication-mode hwtacacs local
+  authentication-super hwtacacs super
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+  authorization-mode hwtacacs none
+  authorization-cmd 1 hwtacacs none
+  authorization-cmd 3 hwtacacs none
+  authorization-cmd 15 hwtacacs none
+ accounting-scheme default
+  accounting-mode hwtacacs
+  accounting start-fail online
+ recording-scheme rscheme0
+  recording-mode hwtacacs ip-vpn
+ cmd recording-scheme rscheme0
+ domain default
+  authentication-scheme default
+  accounting-scheme default
+  authorization-scheme default
+  radius-server default
+ domain default_admin
+  authentication-scheme default
+  accounting-scheme default
+  authorization-scheme default
+  hwtacacs-server ip-vpn
+ local-user admin password irreversible-cipher $1a$3{H]GJ@a,7$G[UJ&YCXxOD_ak1Ed]1*4X5E38afZ=|8lL#m0}2-$ access-limit 4
+ local-user admin privilege level 15
+ local-user admin service-type terminal ssh
+#
+web
+#
+firewall zone Local
+#
+interface Vlanif1
+ shutdown
+#
+interface Vlanif10
+ description Customer Lan
+ ip address 10.10.230.254 255.255.255.0
+ discard srr
+ discard rr
+ discard ts
+ traffic-filter inbound acl 3171
+ statistic enable inbound
+ statistic enable outbound
+#
+interface GigabitEthernet0/0/0
+ description Customer Lan
+ port link-type access
+ port default vlan 10
+ port-isolate enable group 1
+#
+interface GigabitEthernet0/0/1
+ description Customer Lan
+ port link-type access
+ port default vlan 10
+ port-isolate enable group 2
+#
+interface GigabitEthernet0/0/2
+ description Customer Lan
+ port link-type access
+ port default vlan 10
+ port-isolate enable group 3
+#
+interface GigabitEthernet0/0/3
+ description Customer Lan
+ port link-type access
+ port default vlan 10
+ port-isolate enable group 4
+#
+interface GigabitEthernet0/0/4
+ shutdown
+#
+interface GigabitEthernet0/0/5
+ shutdown
+#
+interface GigabitEthernet0/0/6
+ shutdown
+#
+interface GigabitEthernet0/0/7
+ shutdown
+#
+interface GigabitEthernet0/0/8
+ description Connection to VPN #
+ ip address 192.168.12.41 255.255.255.252
+ traffic-policy Mvlan-qos outbound
+#
+interface GigabitEthernet0/0/9
+#
+interface GigabitEthernet0/0/10
+ description VirtualPort
+#
+interface Cellular0/0/0
+ shutdown
+#
+interface NULL0
+#
+interface LoopBack0
+ ip address 10.1.1.131 255.255.255.255
+#
+ info-center source default channel 0 log state off trap state off debug state off
+ info-center source default channel 1 log level notification trap state off
+ info-center source default channel 5 trap level notification
+ info-center source default channel 6 log level notification trap state off
+ info-center loghost source LoopBack0
+ info-center loghost 192.168.28.66 channel 6
+ info-center loghost 192.168.28.253 channel 6
+ info-center logbuffer size 1024
+ info-center trapbuffer size 1024
+ info-center timestamp debugging date precision-time tenth-second
+ info-center max-logfile-number 2
+ info-center logfile size 4
+#
+ snmp-agent local-engineid 800007DB0378B46AA436F9
+ snmp-agent community read %^%#xOLd-%CfTAlk[L1-7c\Fjz+5B$:W.-Ua/v~H3b262+Zo+>qz=PX8e"*hB4E4|+`hH6f$>$"RlU*rXd2+%^%# acl 2093
+ snmp-agent sys-info contact KPN
+ snmp-agent sys-info location KPN
+ snmp-agent sys-info version v2c v3
+ snmp-agent target-host trap-hostname rim-2-159 address 145.13.76.159 udp-port 162 trap-paramsname c13mw08m
+ snmp-agent target-host trap-hostname rim-2-33 address 145.13.76.33 udp-port 162 trap-paramsname c13mw08m
+ snmp-agent trap source LoopBack0
+ snmp-agent trap enable syslog
+ snmp-agent permit interface all
+ snmp-agent complexity-check disable
+ snmp-agent server-source -i LoopBack0
+ snmp-agent
+#
+ sftp server enable
+ stelnet server enable
+ ssh server key-exchange dh_group15_sha512 dh_group14_sha256
+ ssh server permit interface all
+#
+ip route-static 0.0.0.0 0.0.0.0 192.168.12.42 preference 1
+ip route-static 145.7.64.247 255.255.255.255 NULL0 preference 250
+ip route-static 145.13.71.128 255.255.255.128 192.168.12.42 preference 1
+ip route-static 145.13.71.128 255.255.255.128 NULL0 preference 250
+ip route-static 145.13.76.0 255.255.255.0 192.168.12.42 preference 1
+ip route-static 145.13.76.0 255.255.255.0 NULL0 preference 250
+ip route-static 192.168.28.0 255.255.255.0 192.168.12.42 preference 1
+ip route-static 192.168.28.0 255.255.255.0 NULL0 preference 250
+#
+fib regularly-refresh disable
+#
+user-interface con 0
+ acl 2015 outbound
+ authentication-mode aaa
+ user privilege level 1
+ idle-timeout 9 0
+user-interface vty 0 4
+ acl 2014 inbound
+ acl 2015 outbound
+ authentication-mode aaa
+ user privilege level 1
+ idle-timeout 9 0
+ screen-length 32
+ protocol inbound ssh
+#
+wlan ac
+ traffic-profile name default
+ security-profile name default
+ security-profile name default-wds
+  security wpa2 psk pass-phrase %^%#oxgX(rpv&;5_)gTo=@wUppYnWW5m>*1*zqY~!%7>%^%# aes
+ ssid-profile name default
+ vap-profile name default
+ wds-profile name default
+ regulatory-domain-profile name default
+ air-scan-profile name default
+ rrm-profile name default
+ radio-2g-profile name default
+ radio-5g-profile name default
+ wids-spoof-profile name default
+ wids-profile name default
+ ap-system-profile name default
+ port-link-profile name default
+ wired-port-profile name default
+ ap-group name default
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+ undo ntp-service enable
+#
+ops
+#
+autostart
+#
+secelog
+#
+ ms-channel
+
+#
+return

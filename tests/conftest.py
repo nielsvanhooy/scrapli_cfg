@@ -29,6 +29,7 @@ def expected_configs():
         "cisco_nxos": open(f"{TEST_DATA_PATH}/expected/cisco_nxos").read(),
         "cisco_iosxr": open(f"{TEST_DATA_PATH}/expected/cisco_iosxr").read(),
         "juniper_junos": open(f"{TEST_DATA_PATH}/expected/juniper_junos").read(),
+        "huawei_vrp": open(f"{TEST_DATA_PATH}/expected/huawei_vrp").read(),
     }
 
 

@@ -21,6 +21,9 @@ from scrapli.driver.core import (
     NXOSDriver,
 )
 
+from scrapli_community.huawei.vrp.sync_driver import HuaweiVRPDriver
+from scrapli_community.huawei.vrp.async_driver import AsyncHuaweiVRPDriver
+
 VRNETLAB_MODE = bool(os.environ.get("SCRAPLI_VRNETLAB", False))
 USERNAME = "boxen" if not VRNETLAB_MODE else "vrnetlab"
 PASSWORD = "b0x3N-b0x3N" if not VRNETLAB_MODE else "VR-netlab9"
@@ -76,6 +79,16 @@ DEVICES = {
         "host": "localhost" if not VRNETLAB_MODE else "172.18.0.15",
         "port": 25022 if not VRNETLAB_MODE else 22,
     },
+    "huawei_vrp": {
+        "driver": HuaweiVRPDriver,
+        "async_driver": AsyncHuaweiVRPDriver,
+        "auth_username": "lagen008",
+        "auth_password": "lagen008",
+        "auth_secondary": "lagen008",
+        "auth_stricty_key": False,
+        "host": "localhost" if not VRNETLAB_MODE else "10.1.1.131",
+        "port": 25022 if not VRNETLAB_MODE else 22,
+    }
 }
 
 CONFIG_REPLACER = {
