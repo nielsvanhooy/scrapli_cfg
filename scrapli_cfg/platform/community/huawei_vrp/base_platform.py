@@ -50,3 +50,4 @@ class ScrapliCfgHuaweiVrpBase:
 
         version_string = version_string_search.groupdict()['version'] or ""
         return version_string
+

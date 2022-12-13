@@ -60,7 +60,7 @@ class ScrapliCfgHuaweiVrp(ScrapliCfgPlatform, ScrapliCfgHuaweiVrpBase):
         """
         delete_result = self.conn.send_config(
             config=f"rm {self.filesystem}{self.candidate_config_filename}",
-            privilege_level="root_shell",
+            privilege_level="configuration",
         )
         return delete_result
 
@@ -91,82 +91,13 @@ class ScrapliCfgHuaweiVrp(ScrapliCfgPlatform, ScrapliCfgHuaweiVrpBase):
         )
 
     def load_config(self, config: str, replace: bool = False, **kwargs: Any) -> ScrapliCfgResponse:
-        """
-        Load configuration to a device
-
-        Supported kwargs:
-            set: bool indicating config is a "set" style config (ignored if replace is True)
-
-        Args:
-            config: string of the configuration to load
-            replace: replace the configuration or not, if false configuration will be loaded as a
-                merge operation
-            kwargs: additional kwargs that the implementing classes may need for their platform,
-                see above for junos supported kwargs
-
-        Returns:
-            ScrapliCfgResponse: response object
-
-        Raises:
-            N/A
-
-        """
-        self._set = kwargs.get("set", False)
-
-        response = self._pre_load_config(config=config)
-
-        config = self._prepare_load_config(config=config, replace=replace)
-
-        config_result = self.conn.send_config(config=config, privilege_level="root_shell")
-
-        if self._replace is True:
-            load_config = f"load override {self.filesystem}{self.candidate_config_filename}"
-        else:
-            if self._set is True:
-                load_config = f"load set {self.filesystem}{self.candidate_config_filename}"
-            else:
-                load_config = f"load merge {self.filesystem}{self.candidate_config_filename}"
-
-        load_result = self.conn.send_config(config=load_config)
-        self._in_configuration_session = True
-
-        return self._post_load_config(
-            response=response,
-            scrapli_responses=[config_result, load_result],
-        )
+        pass
 
     def abort_config(self) -> ScrapliCfgResponse:
-        response = self._pre_abort_config(
-            session_or_config_file=bool(self.candidate_config_filename)
-        )
-
-        rollback_result = self.conn.send_config(config="rollback 0")
-        abort_result = self._delete_candidate_config()
-        self._reset_config_session()
-
-        return self._post_abort_config(
-            response=response, scrapli_responses=[rollback_result, abort_result]
-        )
+        pass
 
     def commit_config(self, source: str = "running") -> ScrapliCfgResponse:
-        scrapli_responses = []
-        response = self._pre_commit_config(
-            source=source, session_or_config_file=bool(self.candidate_config_filename)
-        )
-
-        commit_result = self.conn.send_config(config="commit")
-        scrapli_responses.append(commit_result)
-
-        if self.cleanup_post_commit:
-            cleanup_result = self._delete_candidate_config()
-            scrapli_responses.append(cleanup_result)
-
-        self._reset_config_session()
-
-        return self._post_load_config(
-            response=response,
-            scrapli_responses=scrapli_responses,
-        )
+        pass
 
     def diff_config(self, source: str = "running") -> ScrapliCfgDiffResponse:
         scrapli_responses = []

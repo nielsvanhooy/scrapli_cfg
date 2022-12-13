@@ -24,7 +24,10 @@ def make_connection_scrapli():
     cfg_conn = ScrapliCfg(conn=conn)
     cfg_conn.prepare()
     cfg_result = cfg_conn.get_config(source="startup")
-    loeloe = "lala"
+    cfg_version = cfg_conn.get_version()
+    with open("niels-config", "r") as f:
+        config = f.read()
+
 
 
 make_connection_scrapli()
