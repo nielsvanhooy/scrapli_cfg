@@ -45,24 +45,7 @@ class ScrapliCfgHuaweiVrp(ScrapliCfgPlatform, ScrapliCfgHuaweiVrpBase):
         self.cleanup_post_commit = cleanup_post_commit
 
     def _delete_candidate_config(self) -> Response:
-        """
-        Delete candidate config from the filesystem
-
-        Args:
-            N/A
-
-        Returns:
-            Response: response from deleting the candidate config
-
-        Raises:
-            N/A
-
-        """
-        delete_result = self.conn.send_config(
-            config=f"rm {self.filesystem}{self.candidate_config_filename}",
-            privilege_level="configuration",
-        )
-        return delete_result
+        pass
 
     def get_version(self) -> ScrapliCfgResponse:
         response = self._pre_get_version()
@@ -78,10 +61,7 @@ class ScrapliCfgHuaweiVrp(ScrapliCfgPlatform, ScrapliCfgHuaweiVrpBase):
     def get_config(self, source: str = "running") -> ScrapliCfgResponse:
         response = self._pre_get_config(source=source)
 
-        if self._in_configuration_session is True:
-            config_result = self.conn.send_config(config="run show configuration")
-        else:
-            config_result = self.conn.send_command(command="display current-configuration")
+        config_result = self.conn.send_command(command="display current-configuration")
 
         return self._post_get_config(
             response=response,

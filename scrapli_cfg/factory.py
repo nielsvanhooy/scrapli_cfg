@@ -15,9 +15,11 @@ from scrapli.driver.core import (
 )
 from scrapli.driver.network import AsyncNetworkDriver, NetworkDriver
 from scrapli_community.huawei.vrp.sync_driver import HuaweiVRPDriver
+from scrapli_community.huawei.vrp.async_driver import AsyncHuaweiVRPDriver
 
 from scrapli_cfg.exceptions import ScrapliCfgException
 from scrapli_cfg.logging import logger
+from scrapli_cfg.platform.community.huawei_vrp.async_platform import AsyncScrapliCfgHuaweiVrp
 from scrapli_cfg.platform.community.huawei_vrp.sync_platform import ScrapliCfgHuaweiVrp
 from scrapli_cfg.platform.core.arista_eos import AsyncScrapliCfgEOS, ScrapliCfgEOS
 from scrapli_cfg.platform.core.cisco_iosxe import AsyncScrapliCfgIOSXE, ScrapliCfgIOSXE
@@ -35,6 +37,7 @@ ASYNC_CORE_PLATFORM_MAP = {
     AsyncIOSXRDriver: AsyncScrapliCfgIOSXR,
     AsyncNXOSDriver: AsyncScrapliCfgNXOS,
     AsyncJunosDriver: AsyncScrapliCfgJunos,
+    AsyncHuaweiVRPDriver: AsyncScrapliCfgHuaweiVrp,
 }
 SYNC_CORE_PLATFORM_MAP = {
     EOSDriver: ScrapliCfgEOS,
