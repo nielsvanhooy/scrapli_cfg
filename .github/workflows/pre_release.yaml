@@ -1,10 +1,11 @@
-name: Weekly Build (3.12-dev)
+name: Weekly Build (dev)
 
 on:
-  workflow_dispatch:
-   schedule:
-     # weekly at 0300 PST/1000 UTC on Sunday
-     - cron: '0 10 * * 0'
+  schedule:
+    # weekly at 0300 PST/1000 UTC on Sunday
+    - cron: '0 10 * * 0'
+  # commented out till 3.13
+  # workflow_dispatch:
 
 jobs:
   build_posix:
@@ -15,7 +16,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         version: ["3.12-dev"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: set up python ${{ matrix.version }}
         uses: actions/setup-python@v4
         with:
